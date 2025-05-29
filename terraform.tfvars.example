@@ -1,0 +1,21 @@
+aws_region      = "us-west-1"
+aws_profile     = "default"
+aws_environment = "development"
+aws_project     = "your-project-name"
+aws_owner       = "your-name"
+aws_keyname    = "your-key-name"
+
+aws_vpc_config = {
+    cidr_block                   = "10.0.0.0/16"
+    enable_dns_support           = true
+    enable_dns_hostnames         = true
+    public_subnets_cidr          = ["10.0.1.0/24"]
+    private_subnets_cidr         = [""]
+    number_of_availability_zones = 1
+    enable_nat_gateway           = false
+}
+
+# EC2 instance configuration
+gearment_app_instance_type = "t2.micro"
+gearment_app_ebs_size = 8
+gearment_app_private_ips = ["10.0.1.10"]

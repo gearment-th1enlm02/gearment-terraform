@@ -1,0 +1,8 @@
+# Terraform files
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock
+.terraform/
+**.tfvars
+*.pem
+*.key
