@@ -75,3 +75,11 @@ module "instances" {
     },
   ]
 }
+
+module "s3" {
+  source = "./modules/s3"
+
+  buckets = var.s3_buckets
+  policies = var.s3_policies
+  s3_users = var.s3_users
+}

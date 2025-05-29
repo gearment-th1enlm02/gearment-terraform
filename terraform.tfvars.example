@@ -19,3 +19,58 @@ aws_vpc_config = {
 gearment_app_instance_type = "t2.micro"
 gearment_app_ebs_size = 8
 gearment_app_private_ips = ["10.0.1.10"]
+
+# S3 bucket configuration
+s3_buckets = [
+    {
+        name              = "gearment-app-user-avatars-bucket"
+        versioning_enabled = true
+        tags              = { Purpose = "UserAvatars" }
+    },
+    {
+        name              = "gearment-app-db-backups-bucket"
+        versioning_enabled = true
+        tags              = { Purpose = "DatabaseBackups" }
+    }
+    ]
+
+    s3_policies = [
+    {
+        name = "gearment-app-avatar-access"
+        statements = [
+        {
+            effect        = "Allow"
+            actions       = ["s3:PutObject", "s3:GetObject", "s3:DeleteObject"]
+            bucket_names  = ["gearment-app-user-avatars-bucket"]
+            resource_type = "object"
+        },
+        {
+            effect        = "Allow"
+            actions       = ["s3:ListBucket"]
+            bucket_names  = ["gearment-app-user-avatars-bucket"]
+            resource_type = "bucket"
+        }
+        ]
+        users = ["gearment-app-avatar-user"]
+    },
+    {
+        name = "gearment-app-backup-access"
+        statements = [
+        {
+            effect        = "Allow"
+            actions       = ["s3:PutObject", "s3:GetObject", "s3:DeleteObject"]
+            bucket_names  = ["gearment-app-db-backups-bucket"]
+            resource_type = "object"
+        },
+        {
+            effect        = "Allow"
+            actions       = ["s3:ListBucket"]
+            bucket_names  = ["gearment-app-db-backups-bucket"]
+            resource_type = "bucket"
+        }
+        ]
+        users = ["gearment-app-backup-user"]
+    }
+]
+
+s3_users = ["gearment-app-avatar-user", "gearment-app-backup-user"]
