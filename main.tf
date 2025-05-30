@@ -57,8 +57,8 @@ module "app_sg" {
 module "instances" {
   source = "./modules/instance"
 
-  subnet_id = module.vpc.private_subnets_id[0]
-  security_groups = [module.servers_sg.id]
+  subnet_id = module.vpc.public_subnets_id[0]
+  security_groups = [module.app_sg.id]
   key_name = var.aws_keyname
   ami = local.ec2_ami
   instance_type = "t2.micro"

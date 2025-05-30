@@ -55,6 +55,12 @@ resource "aws_iam_user" "s3_users" {
     }
 }
 
+# IAM Access Keys
+resource "aws_iam_access_key" "s3_users" {
+    for_each = toset(var.s3_users)
+    user     = aws_iam_user.s3_users[each.value].name
+}
+
 # Attach Policies to Users
 resource "aws_iam_user_policy_attachment" "s3_user_policy" {
     for_each = {
