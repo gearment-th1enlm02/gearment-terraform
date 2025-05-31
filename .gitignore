@@ -7,3 +7,4 @@
 *.pem
 *.key
 s3_access_keys.json
+.env

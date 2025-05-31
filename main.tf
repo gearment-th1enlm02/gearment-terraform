@@ -71,7 +71,7 @@ module "instances" {
       instance_type = var.gearment_app_instance_type
       ebs_size = var.gearment_app_ebs_size
       security_groups = [module.app_sg.id]
-      # user_data = file("./scripts/init.sh")
+      user_data       = file("${path.module}/scripts/init.sh")
     },
   ]
 }
@@ -79,7 +79,11 @@ module "instances" {
 module "s3" {
   source = "./modules/s3"
 
-  buckets = var.s3_buckets
+  buckets = [for bucket in var.s3_buckets : {
+    name              = bucket.name
+    versioning_enabled = bucket.versioning_enabled
+    force_destroy      = true # Set to true to allow deletion of non-empty buckets
+  }]
   policies = var.s3_policies
   s3_users = var.s3_users
 }

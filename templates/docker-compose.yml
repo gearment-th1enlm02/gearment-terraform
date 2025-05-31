@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    # env_file:
+    #   - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: gearment-admin
+      MONGO_INITDB_ROOT_PASSWORD: gearment-admin
+    command: mongod --auth
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./mongo_data:/data/db
+  gearment-app:
+    image: th1enlm02/gearment-hello-world-app:latest
+    pull_policy: always
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./gearment-app/.env
+    command: ["node", "server.js"]
+
+  gearment-ui:
+    image: th1enlm02/gearment-hello-world-ui:latest
+    pull_policy: always
+    restart: always
+    depends_on:
+      - gearment-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./gearment-ui/.env
+    command: ["npm", "run", "dev"]
