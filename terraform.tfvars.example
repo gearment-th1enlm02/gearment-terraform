@@ -25,16 +25,14 @@ s3_buckets = [
     {
         name              = "gearment-app-user-avatars-bucket"
         versioning_enabled = true
-        tags              = { Purpose = "UserAvatars" }
     },
     {
         name              = "gearment-app-db-backups-bucket"
         versioning_enabled = true
-        tags              = { Purpose = "DatabaseBackups" }
     }
-    ]
+]
 
-    s3_policies = [
+s3_policies = [
     {
         name = "gearment-app-avatar-access"
         statements = [
