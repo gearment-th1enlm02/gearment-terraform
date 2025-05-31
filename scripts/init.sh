@@ -69,4 +69,4 @@ sudo curl -L -o /home/ubuntu/app/docker-compose.yml https://raw.githubuserconten
 echo "Setting up Docker Compose directories..."
 sudo mkdir -p /home/ubuntu/app/mongo_data /home/ubuntu/app/gearment-app /home/ubuntu/app/gearment-ui
 sudo chown -R ubuntu:ubuntu /home/ubuntu/app
-sudo docker-compose -f /home/ubuntu/app/docker-compose.yml up -d mongo
+sudo usermod -aG docker $USER
