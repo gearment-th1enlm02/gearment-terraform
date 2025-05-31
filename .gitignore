@@ -9,3 +9,4 @@
 s3_access_keys.json
 .env
 github-runner.sh
+mongo_backup.sh
