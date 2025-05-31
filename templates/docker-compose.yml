@@ -2,6 +2,7 @@ version: "3.8"
 services:
   mongo:
     image: mongo:latest
+    container_name: mongo
     restart: always
     # env_file:
     #   - .env
@@ -15,6 +16,7 @@ services:
       - ./mongo_data:/data/db
   gearment-app:
     image: th1enlm02/gearment-hello-world-app:latest
+    container_name: gearment-app
     pull_policy: always
     restart: always
     depends_on:
@@ -27,6 +29,7 @@ services:
 
   gearment-ui:
     image: th1enlm02/gearment-hello-world-ui:latest
+    container_name: gearment-ui
     pull_policy: always
     restart: always
     depends_on:
