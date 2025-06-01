@@ -87,3 +87,37 @@ module "s3" {
   policies = var.s3_policies
   s3_users = var.s3_users
 }
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = module.vpc.vpc_id
+  service_name      = "com.amazonaws.${var.aws_region}.s3"
+  vpc_endpoint_type = "Gateway"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject",
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "arn:aws:s3:::gearment-app-user-avatars-bucket",
+          "arn:aws:s3:::gearment-app-user-avatars-bucket/*",
+          "arn:aws:s3:::gearment-app-db-backups-bucket",
+          "arn:aws:s3:::gearment-app-db-backups-bucket/*"
+        ]
+      }
+    ]
+  })
+
+  route_table_ids = [module.vpc.public_route_table_id]
+
+  tags = {
+    Name = "${var.aws_project}-s3-endpoint"
+  }
+}
